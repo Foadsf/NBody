@@ -13,6 +13,16 @@ double distance(double distances[]) {
   return sqrt(dist);// + damp*damp;
 }
 
+void print(Body a, double bMass, double dist) {
+  std::cout << "Body: " << a.getNum() << std::endl;
+  std::cout << "Forces " << a.getForceX() << " " << a.getForceY() << " " << a.getForceZ() << std::endl;
+  std::cout << "Total force " << sqrt(a.getForceX()*a.getForceX() + 
+    a.getForceY()*a.getForceY() + 
+    a.getForceZ()*a.getForceZ()) << std::endl;
+  std::cout << "New velocity: " << a.getVelX() << " " << a.getVelY() << " " << a.getVelZ() << std::endl;
+  std::cout << "New position: " << a.getPosX() << " " << a.getPosY() << " " << a.getPosZ() << std::endl << std::endl;
+}
+
 void updateBody(Body &a, Body &b) {
   double r[3] = {b.getPosX() - a.getPosX(), b.getPosY() - a.getPosY(), b.getPosZ() - a.getPosZ()};
   double acc[3] = {0.0};
@@ -23,20 +33,16 @@ void updateBody(Body &a, Body &b) {
   a.setForce( a.getForceX() + (G * r[0] * a.getMass() * b.getMass() /  powf(dist,3.0)),
     a.getForceY() + (G * r[1] * a.getMass() * b.getMass() / powf(dist,3.0)),
     a.getForceZ() + (G * r[2] * a.getMass() * b.getMass() / powf(dist,3.0)));
-  std::cout << "Forces " << a.getForceX() << " " << a.getForceY() << " " << a.getForceZ() << std::endl;
-  std::cout << "My total force " << sqrt(a.getForceX()*a.getForceX() + 
-    a.getForceY()*a.getForceY() + 
-    a.getForceZ()*a.getForceZ()) << std::endl;
-  std::cout << "Actual Total force " << G*a.getMass()*b.getMass()/(powf(dist,2.0)) << std::endl;
 
   //  update velocity
   for (int i = 0; i < 3; i++) {
     acc[i] = G * b.getMass() * r[i] / powf(dist,3.0);
   }
   a.setVel(a.getVelX() + acc[0], a.getVelY() + acc[1], a.getVelZ() + acc[2]);
-  std::cout << "New velocity: " << a.getVelX() << " " << a.getVelY() << " " << a.getVelZ() << std::endl;
-
+  
   //  update position
   a.setPos(a.getPosX() + a.getVelX(), a.getPosY() + a.getVelY(), a.getPosZ() + a.getVelZ()); 
-  std::cout << "New position: " << a.getPosX() << " " << a.getPosY() << " " << a.getPosZ() << std::endl << std::endl;
+
+  //  Print new information
+  print(a, b.getMass(), dist);
 }

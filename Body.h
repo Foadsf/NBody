@@ -10,8 +10,8 @@ public:
   //  Everything
   void setAll(double inAll[]);
   void setAll(double pX, double pY, double pZ,
-              double vX, double vY, double vZ, double m, 
-              double fX, double fY, double fZ);
+              double vX, double vY, double vZ, double m);
+  void setRandom(unsigned int numBody);
   
   //  Position
   void setPos(double inPos[]);
@@ -41,10 +41,15 @@ public:
   double getForceY();
   double getForceZ();
 
+  //  Num
+  void setNum(unsigned int numBody);
+  unsigned int getNum();
+
 private:
   double posX, posY, posZ;
   double velX, velY, velZ;
   double mass;
   double forceX, forceY, forceZ;
+  unsigned int num;
 };
 #endif

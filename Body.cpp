@@ -1,5 +1,7 @@
 #include "Body.h"
 #include <iostream>
+#include <time.h>
+#include <stdlib.h>
 
 Body::Body(void) {}
 Body::~Body(void) {}
@@ -9,16 +11,24 @@ Body::~Body(void) {}
 void Body::setAll(double inAll[]) {
   posX = inAll[0]; posY = inAll[1]; posZ = inAll[2];
   velX = inAll[3]; velY = inAll[4]; velZ = inAll[5];
-  mass = inAll[6];
-  forceX = inAll[7]; forceY = inAll[8]; forceZ = inAll[9];
+  mass = inAll[6]; num = inAll[7];
 }
 void Body::setAll(double pX, double pY, double pZ,
-                  double vX, double vY, double vZ, double m,
-                  double fX, double fY, double fZ) {
+                  double vX, double vY, double vZ, double m) {
                     posX = pX; posY = pY; posZ = pZ;
                     velX = vX; velY = vY; velZ = vZ;
                     mass = m;
-                    forceX = fX; forceY = fY; forceZ = fZ;
+}
+
+void Body::setRandom(unsigned int numBody) {
+  posX = (float)rand() / (float)RAND_MAX/10.0;
+  posY = (float)rand() / (float)RAND_MAX/10.0;
+  posZ = (float)rand() / (float)RAND_MAX/10.0;
+  velX = (float)rand() / (float)RAND_MAX/1.0;
+  velY = (float)rand() / (float)RAND_MAX/1.0;
+  velZ = (float)rand() / (float)RAND_MAX/1.0;
+  mass = (float)rand() / (float)RAND_MAX/1000.0;
+  num = numBody;
 }
 
 //  Set position values
@@ -114,4 +124,14 @@ double Body::getForceY() {
 }
 double Body::getForceZ() {
   return forceZ;
+}
+
+//  Set num
+void Body::setNum(unsigned int numBody) {
+  num = numBody;
+}
+
+//  Get num
+unsigned int Body::getNum() {
+  return num;
 }
