@@ -1,3 +1,6 @@
+#ifndef Graphics_H
+#define Graphics_H
+
 #include "Body.h"
 #include "Physics.h"
 #include <time.h>
@@ -13,10 +16,14 @@
 #endif
 
 const double PI = 3.14159265;
+extern const unsigned int NUMBODIES;
+extern Body bodyList[];
 
 float degToRad(double degrees);
 void reshape(int w, int h);
 void init();
 void drawBodies();
+void updateBodyPositions();
 void display();
 void graphicsMain();
+#endif
