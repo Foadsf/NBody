@@ -44,5 +44,5 @@ void updateBody(Body &a, Body &b) {
   a.setPos(a.getPosX() + a.getVelX(), a.getPosY() + a.getVelY(), a.getPosZ() + a.getVelZ()); 
 
   //  Print new information
-  print(a, b.getMass(), dist);
+  //print(a, b.getMass(), dist);
 }

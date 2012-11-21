@@ -21,13 +21,13 @@ void Body::setAll(double pX, double pY, double pZ,
 }
 
 void Body::setRandom(unsigned int numBody) {
-  posX = (float)rand() / (float)RAND_MAX/10.0;
-  posY = (float)rand() / (float)RAND_MAX/10.0;
-  posZ = (float)rand() / (float)RAND_MAX/10.0;
-  velX = (float)rand() / (float)RAND_MAX/1.0;
-  velY = (float)rand() / (float)RAND_MAX/1.0;
-  velZ = (float)rand() / (float)RAND_MAX/1.0;
-  mass = (float)rand() / (float)RAND_MAX/1000.0;
+  posX = (float)rand() / (float)RAND_MAX/1.0;
+  posY = (float)rand() / (float)RAND_MAX/1.0;
+  posZ = (float)rand() / (float)RAND_MAX/1.0;
+  //velX = (float)rand() / (float)RAND_MAX/1.0;
+  //velY = (float)rand() / (float)RAND_MAX/1.0;
+  //velZ = (float)rand() / (float)RAND_MAX/1.0;
+  mass = (float)rand() / (float)RAND_MAX/1.0;
   num = numBody;
 }
 
