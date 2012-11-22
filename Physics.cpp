@@ -4,7 +4,7 @@
 
 const double G = 6.6726E-11;
 const double EPS = 1.0;
-const double DAMP = 0.001;
+const double DAMP = 0.1;
 
 double distance(double distances[]) {
   double dist = 0.0;

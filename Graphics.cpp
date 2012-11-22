@@ -4,6 +4,7 @@
 int camRot = 220;
 float aspectRatio = 1.0;
 static int spin = 45;
+bool reset = false;
 #define UNUSED(x) ((void)(x))
 
 struct cam {
@@ -17,14 +18,18 @@ float degToRad(double degrees) {
 	return degrees*PI/180.0f;
 }
 
+void resetBodies() {
+	for (int i = 0; i < NUMBODIES; i++) 
+		bodyList[i].setRandom(i);
+}
+
 void init() {
 	c.x = 3.0; //camera location
 	c.y = 2.0;
 	c.z = 2.0;
 	glClearColor (0.3, 0.3, 0.3, 0.0);
 	glEnable(GL_DEPTH_TEST); 		       // Enable depth buffering
-	for (int i = 0; i < NUMBODIES; i++) 
-		bodyList[i].setRandom(i);
+	resetBodies();
 }
 
 void drawBodies() {
@@ -106,7 +111,9 @@ void keyboard (unsigned char key, int x, int y) {
     c.z = c.z - sin(degToRad(camRot));
   } else  if (key==27) {
     exit(0);
-  }
+	} else if (key == 'r') {
+		resetBodies();
+	}
 	glutPostRedisplay();
 }
 

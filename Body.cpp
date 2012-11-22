@@ -28,9 +28,9 @@ void Body::setRandom(unsigned int numBody) {
   posX = fRand(0.0, 1.0);
   posY = fRand(0.0, 1.0);
   posZ = fRand(0.0, 1.0);
-  velX = fRand(-0.0001, 0.0001);
-  velY = fRand(-0.0001, 0.0001);
-  velZ = fRand(-0.0001, 0.0001);
+  //velX = fRand(-0.0001, 0.0001);
+  //velY = fRand(-0.0001, 0.0001);
+  //velZ = fRand(-0.0001, 0.0001);
   mass = fRand(0.0, 10.0);
   num = numBody;
 }

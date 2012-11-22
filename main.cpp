@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-const unsigned int NUMBODIES = 30;
+const unsigned int NUMBODIES = 3;
 Body bodyList[NUMBODIES];
 
 int main() {
