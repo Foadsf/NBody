@@ -4,13 +4,14 @@
 
 const double G = 6.6726E-11;
 const double EPS = 1.0;
+const double DAMP = 0.001;
 
 double distance(double distances[]) {
   double dist = 0.0;
   for (int i = 0; i < 3; i++) {
     dist += distances[i]*distances[i];
   }
-  return sqrt(dist);// + damp*damp;
+  return sqrt(dist + DAMP*DAMP);
 }
 
 void print(Body a, double bMass, double dist) {

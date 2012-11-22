@@ -4,13 +4,11 @@
 #include <time.h>
 #include <stdlib.h>
 
-const unsigned int NUMBODIES = 200;
+const unsigned int NUMBODIES = 30;
 Body bodyList[NUMBODIES];
 
 int main() {
   srand(time(NULL));
   graphicsMain();
-
-  
   return 0;
 }

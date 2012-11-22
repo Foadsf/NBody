@@ -3,9 +3,13 @@
 #include <time.h>
 #include <stdlib.h>
 
+double fRand(double fMin, double fMax) {
+	double f = (double)rand() / RAND_MAX;
+	return fMin + f*(fMax - fMin);
+}
+
 Body::Body(void) {}
 Body::~Body(void) {}
-
 //  Set every value
 //  Position, Velocity, Mass
 void Body::setAll(double inAll[]) {
@@ -21,13 +25,13 @@ void Body::setAll(double pX, double pY, double pZ,
 }
 
 void Body::setRandom(unsigned int numBody) {
-  posX = (float)rand() / (float)RAND_MAX/1.0;
-  posY = (float)rand() / (float)RAND_MAX/1.0;
-  posZ = (float)rand() / (float)RAND_MAX/1.0;
-  //velX = (float)rand() / (float)RAND_MAX/1.0;
-  //velY = (float)rand() / (float)RAND_MAX/1.0;
-  //velZ = (float)rand() / (float)RAND_MAX/1.0;
-  mass = (float)rand() / (float)RAND_MAX/1.0;
+  posX = fRand(0.0, 1.0);
+  posY = fRand(0.0, 1.0);
+  posZ = fRand(0.0, 1.0);
+  velX = fRand(-0.0001, 0.0001);
+  velY = fRand(-0.0001, 0.0001);
+  velZ = fRand(-0.0001, 0.0001);
+  mass = fRand(0.0, 10.0);
   num = numBody;
 }
 

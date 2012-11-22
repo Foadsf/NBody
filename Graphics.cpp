@@ -18,9 +18,9 @@ float degToRad(double degrees) {
 }
 
 void init() {
-	c.x = 0.0; //camera location
-	c.y = 4.0;
-	c.z = 0.0;
+	c.x = 3.0; //camera location
+	c.y = 2.0;
+	c.z = 2.0;
 	glClearColor (0.3, 0.3, 0.3, 0.0);
 	glEnable(GL_DEPTH_TEST); 		       // Enable depth buffering
 	for (int i = 0; i < NUMBODIES; i++) 
@@ -31,7 +31,7 @@ void drawBodies() {
 	for (int currentBody = 0; currentBody < NUMBODIES; currentBody++) {
 		glPushMatrix();
 		glTranslated(bodyList[currentBody].getPosX(), bodyList[currentBody].getPosY(), bodyList[currentBody].getPosZ());
-		glutSolidSphere(0.005, 15, 15);
+		glutSolidSphere(0.005, 10, 10);
 		glPopMatrix();
 	}
 }
@@ -51,14 +51,29 @@ void updateBodyPositions() {
 	}
 }
 
+void drawAxes() {
+	glPushMatrix();
+	glBegin(GL_LINES);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(1.0, 0.0, 0.0);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, 1.0, 0.0);
+	glVertex3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, 0.0, 1.0);
+	glEnd();
+	glPopMatrix();
+}
+
 void display(void)
 {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColor3f(1.0, 1.0, 1.0);
+	drawAxes();
 	drawBodies();
 	updateBodyPositions();
 	glFlush ();
 	glutPostRedisplay();
+	
 }
 
 void reshape (int w, int h)
@@ -68,27 +83,30 @@ void reshape (int w, int h)
 	glLoadIdentity();
 	//gluOrtho2D(0, 2, 0, 2);
 	gluPerspective(60, float(w)/float(h), 0.001, 100);
-	gluLookAt(0, 4, 0, 0.5, 0.5, 0.5, 0.0, 1.0, 0.0);
+	//gluLookAt(c.x, c.y, c.z, 0.5, 0.5, 0.5, 0.0, 1.0, 0.0);
+	gluLookAt(c.x, 0.5, c.z, c.x+cos(degToRad(camRot)), 0.5, c.z+sin(degToRad(camRot)), 0.0, 1.0, 0.0);
 }
 
 void keyboard (unsigned char key, int x, int y) {
 	UNUSED(x);
 	UNUSED(y);
 	if (key=='a') {
-		camRot = (camRot - 3) % 360;
-	} else  if (key=='d') {
-		camRot = (camRot + 3) % 360;
-	} else  if (key=='q') {
-		spin = (spin+5) % 360;
-	} else  if (key=='e') {
-		spin = (spin-5) % 360;
-	} else  if (key=='w') {
-		c.y++;
-	} else  if (key=='s') {
-		c.y--;
-	} else  if (key==27) {
-		exit(0);
-	}
+    camRot = (camRot - 3) % 360;
+  } else  if (key=='d') {
+    camRot = (camRot + 3) % 360;
+  } else  if (key=='q') {
+    spin = (spin+5) % 360;
+  } else  if (key=='e') {
+    spin = (spin-5) % 360;
+  } else  if (key=='w') {
+    c.x = c.x + cos(degToRad(camRot));
+    c.z = c.z + sin(degToRad(camRot));
+  } else  if (key=='s') {
+    c.x = c.x - cos(degToRad(camRot));
+    c.z = c.z - sin(degToRad(camRot));
+  } else  if (key==27) {
+    exit(0);
+  }
 	glutPostRedisplay();
 }
 
