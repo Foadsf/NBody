@@ -4,6 +4,7 @@
 int camRot = 220;
 float aspectRatio = 1.0;
 static int spin = 45;
+float AR = 1.0;
 bool reset = false;
 #define UNUSED(x) ((void)(x))
 
@@ -24,9 +25,9 @@ void resetBodies() {
 }
 
 void init() {
-	c.x = 3.0; //camera location
-	c.y = 2.0;
-	c.z = 2.0;
+	c.x = 6.0; //camera location
+	c.y = 0.5;
+	c.z = 6.0;
 	glClearColor (0.3, 0.3, 0.3, 0.0);
 	glEnable(GL_DEPTH_TEST); 		       // Enable depth buffering
 	resetBodies();
@@ -72,13 +73,19 @@ void drawAxes() {
 void display(void)
 {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(50, AR, 1, 60);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+		gluLookAt(c.x, c.y, c.z, 0.5, 0.5, 0.5, 0.0, 1.0, 0.0);
 	glColor3f(1.0, 1.0, 1.0);
 	drawAxes();
 	drawBodies();
 	updateBodyPositions();
-	glFlush ();
-	glutPostRedisplay();
-	
+  glutSwapBuffers();
+	glLoadIdentity();
+	glFlush();
 }
 
 void reshape (int w, int h)
@@ -86,10 +93,47 @@ void reshape (int w, int h)
 	glViewport (0, 0, (GLsizei) w, (GLsizei) h);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
-	//gluOrtho2D(0, 2, 0, 2);
 	gluPerspective(60, float(w)/float(h), 0.001, 100);
-	//gluLookAt(c.x, c.y, c.z, 0.5, 0.5, 0.5, 0.0, 1.0, 0.0);
-	gluLookAt(c.x, 0.5, c.z, c.x+cos(degToRad(camRot)), 0.5, c.z+sin(degToRad(camRot)), 0.0, 1.0, 0.0);
+	glMatrixMode(GL_MODELVIEW);
+	AR = float(w)/float(h);
+}
+
+float angle = 0.0f;
+float deltaAngle = 0.0f;
+float deltaMove = 0;
+int xOrigin = -1;
+float lx=0.0f,lz=-1.0f;
+
+void mouseButton(int button, int state, int x, int y) {
+
+	// only start motion if the left button is pressed
+	if (button == GLUT_LEFT_BUTTON) {
+
+		// when the button is released
+		if (state == GLUT_UP) {
+			angle += deltaAngle;
+			xOrigin = -1;
+		}
+		else  {// state = GLUT_DOWN
+			xOrigin = x;
+		}
+	}
+	display();
+}
+
+void mouseMove(int x, int y) {
+
+	// this will only be true when the left button is down
+	if (xOrigin >= 0) {
+
+		// update deltaAngle
+		deltaAngle = (x - xOrigin) * 0.1f;
+
+		// update camera's direction
+		c.x = sin(angle + deltaAngle);
+		c.z = -cos(angle + deltaAngle);
+	}
+	display();
 }
 
 void keyboard (unsigned char key, int x, int y) {
@@ -114,14 +158,14 @@ void keyboard (unsigned char key, int x, int y) {
 	} else if (key == 'r') {
 		resetBodies();
 	}
-	glutPostRedisplay();
+	display();
 }
 
 void graphicsMain() {
 	int argc = 1;
 	char* argv[] = {"NBody", NULL};
 	glutInit (&argc, argv);
-	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize (500, 500); 
 	glutInitWindowPosition (100, 100);
 	glutCreateWindow (argv[0]);
@@ -129,5 +173,9 @@ void graphicsMain() {
 	glutDisplayFunc(display); 
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboard);
+	// here are the two new functions
+	glutMouseFunc(mouseButton);
+	glutMotionFunc(mouseMove);
+	glutIdleFunc(display);
 	glutMainLoop();
 }
