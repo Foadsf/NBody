@@ -1,10 +1,9 @@
 #include "Graphics.h"
 #include "Body.h"
 
-int camRot = 0;
+int cTheta = 0, cPhi = 90;
 float cx, cy, cz;
 float aspectRatio = 1.0;
-static int spin = 45;
 float AR = 1.0;
 bool reset = false;
 #define UNUSED(x) ((void)(x))
@@ -25,12 +24,15 @@ void resetBodies() {
 }
 
 void init() {
-	cx = c.x = 6.0; //camera location
-	cy = c.y = 0.5;
-	cz = c.z = 6.0;
-	c.z = 0.0;
-	
-	glClearColor (0.3, 0.3, 0.3, 0.0);
+	cx = 20.0; //camera location
+	cy = 15.0;
+	cz = 20.0;
+
+	c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
+  c.y = cy * cos(degToRad(cPhi));
+	c.z = cz * cos(degToRad(cTheta)) * sin(degToRad(cPhi));
+
+	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glEnable(GL_DEPTH_TEST); 		       // Enable depth buffering
 	resetBodies();
 }
@@ -39,8 +41,9 @@ void drawBodies() {
 	glColor3f(1.0, 1.0, 0.0);
 	for (int currentBody = 0; currentBody < NUMBODIES; currentBody++) {
 		glPushMatrix();
+		glTranslatef(5, 5, 5);
 		glTranslated(bodyList[currentBody].getPosX(), bodyList[currentBody].getPosY(), bodyList[currentBody].getPosZ());
-		glutSolidSphere(0.005, 10, 10);
+		glutSolidSphere(0.05, 10, 10);
 		glPopMatrix();
 	}
 }
@@ -61,16 +64,10 @@ void updateBodyPositions() {
 }
 
 void drawAxes() {
-	glColor3f(0.0, 0.0, 0.0);
+	glColor3f(0.2, 0.2, 0.2);
 	glPushMatrix();
-	glBegin(GL_LINES);
-	glVertex3f(0.0, 0.0, 0.0);
-	glVertex3f(1.0, 0.0, 0.0);
-	glVertex3f(0.0, 0.0, 0.0);
-	glVertex3f(0.0, 1.0, 0.0);
-	glVertex3f(0.0, 0.0, 0.0);
-	glVertex3f(0.0, 0.0, 1.0);
-	glEnd();
+	glTranslatef(10, 10, 10);
+	glutWireCube(10);
 	glPopMatrix();
 }
 
@@ -78,12 +75,12 @@ void display(void)
 {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(50, AR, 1, 60);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-		gluLookAt(c.x, c.y, c.z, 0.0, 0.5, 0.0, 0.0, 1.0, 0.0);
-	glColor3f(1.0, 1.0, 1.0);
+	glLoadIdentity();
+	
+	gluPerspective(50, AR, 1, 60);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(10.0+c.x,10.0+c.y, 10.0+c.z, 10.0, 10.0, 10.0, 0.0, 1.0, 0.0);
 	drawAxes();
 	drawBodies();
 	updateBodyPositions();
@@ -96,7 +93,7 @@ void reshape (int w, int h)
 	glViewport (0, 0, (GLsizei) w, (GLsizei) h);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60, float(w)/float(h), 0.001, 100);
+	gluPerspective(60, float(w)/float(h), 0.001, 1000);
 	glMatrixMode(GL_MODELVIEW);
 	AR = float(w)/float(h);
 }
@@ -132,7 +129,7 @@ void mouseMove(int x, int y) {
 
 		// update deltaAngle
 		deltaAngle = (x - xOrigin) * 2.0f;
-		camRot+=deltaAngle;
+		cTheta+=deltaAngle;
 	}
 	display();
 }
@@ -141,29 +138,45 @@ void keyboard (unsigned char key, int x, int y) {
 	UNUSED(x);
 	UNUSED(y);
 	if (key=='a') {
-    camRot = (camRot - 3) % 360;
-		c.x = cx * cos(degToRad(camRot));
-		c.z = cz* sin(degToRad(camRot));
-  } else  if (key=='d') {
-    camRot = (camRot + 3) % 360;
-		c.x = cx * cos(degToRad(camRot));
-		c.z = cz* sin(degToRad(camRot));
-  } else  if (key=='q') {
-    spin = (spin+5) % 360;
-  } else  if (key=='e') {
-    spin = (spin-5) % 360;
-  } else  if (key=='w') {
-    cx--;
-		cz--;
-		c.x = cx * cos(degToRad(camRot));
-		c.z = cz* sin(degToRad(camRot));
-  } else  if (key=='s') {
-		cx++;
-		cz++;
-		c.x = cx * cos(degToRad(camRot));
-		c.z = cz* sin(degToRad(camRot));
-  } else  if (key==27) {
-    exit(0);
+		cTheta = (cTheta - 3) % 360;
+		c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
+		c.y = cy * cos(degToRad(cPhi));
+		c.z = cz * cos(degToRad(cTheta)) * sin(degToRad(cPhi));
+	} else  if (key=='d') {
+		cTheta = (cTheta + 3) % 360;
+		c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
+		c.y = cy * cos(degToRad(cPhi));
+		c.z = cz * cos(degToRad(cTheta)) * sin(degToRad(cPhi));
+	} else  if (key=='q') {
+		cPhi = (cPhi + 3);
+		if (cPhi >= 177)
+			cPhi = 177;
+		c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
+		c.y = cy * cos(degToRad(cPhi));
+		c.z = cz * cos(degToRad(cTheta)) * sin(degToRad(cPhi));
+	} else  if (key=='e') {
+		cPhi = (cPhi - 3);
+		if (cPhi <= 3)
+			cPhi = 3;
+		c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
+		c.y = cy * cos(degToRad(cPhi));
+		c.z = cz * cos(degToRad(cTheta)) * sin(degToRad(cPhi));
+	} else  if (key=='w') {
+		cx -= 0.25;
+		cy -= 0.25;
+		cz -= 0.25;
+		c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
+		c.y = cy * cos(degToRad(cPhi));
+		c.z = cz * cos(degToRad(cTheta)) * sin(degToRad(cPhi));
+	} else  if (key=='s') {
+		cx += 0.25;
+		cy += 0.25;
+		cz += 0.25;
+		c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
+		c.y = cy * cos(degToRad(cPhi));
+		c.z = cz * cos(degToRad(cTheta)) * sin(degToRad(cPhi));
+	} else  if (key==27) {
+		exit(0);
 	} else if (key == 'r') {
 		resetBodies();
 	}
