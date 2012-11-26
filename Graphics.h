@@ -20,6 +20,10 @@ extern const unsigned int NUMBODIES;
 extern Body bodyList[];
 
 float degToRad(double degrees);
+void resetBodies();
+void drawAxes();
+void keyboard();
+void graphicsMain();
 void reshape(int w, int h);
 void init();
 void drawBodies();
