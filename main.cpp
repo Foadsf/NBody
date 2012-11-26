@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <CL/cl.h>
 
-const unsigned int NUMBODIES = 10;
+const unsigned int NUMBODIES = 100;
 Body bodyList[NUMBODIES];
 
 int main() {

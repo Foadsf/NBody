@@ -3,15 +3,16 @@
 #include <time.h>
 #include <stdlib.h>
 
+//  Random number between two points (inclusive)
 double fRand(double fMin, double fMax) {
-	double f = (double)rand() / RAND_MAX;
-	return fMin + f*(fMax - fMin);
+  double f = (double)rand() / RAND_MAX;
+  return fMin + f*(fMax - fMin);
 }
 
 Body::Body(void) {}
 Body::~Body(void) {}
-//  Set every value
-//  Position, Velocity, Mass
+
+//  Set every value: Position, Velocity, Mass, ID#
 void Body::setAll(double inAll[]) {
   posX = inAll[0]; posY = inAll[1]; posZ = inAll[2];
   velX = inAll[3]; velY = inAll[4]; velZ = inAll[5];
@@ -24,6 +25,7 @@ void Body::setAll(double pX, double pY, double pZ,
                     mass = m;
 }
 
+//  Randomize values
 void Body::setRandom(unsigned int numBody) {
   posX = fRand(0.0, 10.0);
   posY = fRand(0.0, 10.0);
@@ -104,9 +106,9 @@ double Body::getMass() {
 
 //  Set force values
 void Body::setForce(double inForce[]) {
-    forceX = inForce[0];
-    forceY = inForce[1];
-    forceZ = inForce[2];
+  forceX = inForce[0];
+  forceY = inForce[1];
+  forceZ = inForce[2];
 }
 void Body::setForce(double x, double y, double z) {
   forceX = x;

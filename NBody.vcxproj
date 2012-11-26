@@ -52,12 +52,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Libraries\Freeglut\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Libraries\Freeglut\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\include;C:\Terraspark\libraries\OpenCL-1.1\common\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Libraries\Freeglut\lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\lib\Win32</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Libraries\Freeglut\lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\lib\Win32;C:\Terraspark\libraries\OpenCL-1.1\common\lib\Win32</AdditionalLibraryDirectories>
       <AdditionalDependencies>OpenCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

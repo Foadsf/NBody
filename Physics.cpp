@@ -2,10 +2,12 @@
 #include <math.h>
 #include <iostream>
 
+//  Constants of physics calculations
 const double G = 6.6726E-11;
 const double EPS = 1.0;
 const double DAMP = 0.1;
 
+//  Distance between two bodies w/ dampening applied
 double distance(double distances[]) {
   double dist = 0.0;
   for (int i = 0; i < 3; i++) {
@@ -14,6 +16,7 @@ double distance(double distances[]) {
   return sqrt(dist + DAMP*DAMP);
 }
 
+//  Print out information for debugging purposes
 void print(Body a, double bMass, double dist) {
   std::cout << "Body: " << a.getNum() << std::endl;
   std::cout << "Forces " << a.getForceX() << " " << a.getForceY() << " " << a.getForceZ() << std::endl;
@@ -24,6 +27,7 @@ void print(Body a, double bMass, double dist) {
   std::cout << "New position: " << a.getPosX() << " " << a.getPosY() << " " << a.getPosZ() << std::endl << std::endl;
 }
 
+//  Given two bodies, adjust a while treating b as a stationary body
 void updateBody(Body &a, Body &b) {
   double r[3] = {b.getPosX() - a.getPosX(), b.getPosY() - a.getPosY(), b.getPosZ() - a.getPosZ()};
   double acc[3] = {0.0};
@@ -40,7 +44,7 @@ void updateBody(Body &a, Body &b) {
     acc[i] = G * b.getMass() * r[i] / powf(dist,3.0);
   }
   a.setVel(a.getVelX() + acc[0], a.getVelY() + acc[1], a.getVelZ() + acc[2]);
-  
+
   //  update position
   a.setPos(a.getPosX() + a.getVelX(), a.getPosY() + a.getVelY(), a.getPosZ() + a.getVelZ()); 
 
