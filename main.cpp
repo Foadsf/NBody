@@ -3,7 +3,7 @@
 #include "Graphics.h"
 #include <time.h>
 #include <stdlib.h>
-#include <CL/cl.h>
+#include "CL/cl.h"
 
 const unsigned int NUMBODIES = 10;
 Body bodyList[NUMBODIES];
