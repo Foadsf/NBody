@@ -3,17 +3,16 @@ N-Body Problem
 Status Report
 
 So far the n-body program has been coming along fairly well. As of now the C++ version of the code works very well and the
-OpenCL version is very close to being the same. The OpenCL version has an issue with bodies flying away at fast speeds for no reason. 
-I believe this might be an issue with how the distances and forces are calculated. Getting the OpenCL version to work was not very 
-straightforward and took more time than I was expecting. 
+OpenCL version seems to be functioning the same. Getting the OpenCL version to work was not very straightforward and took more 
+time than I was expecting. 
 
 Things that work:
 - C++ Version
+- OpenCL Version
 - Camera controls via keyboard
 - Switching between C++ and OpenCL
 
 Things that need to be fixed:
-- OpenCL version velocity issue
 - General code cleanup and relocation
 - Linux compatability
 
