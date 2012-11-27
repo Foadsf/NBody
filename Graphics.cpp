@@ -22,7 +22,7 @@ float degToRad(double degrees) {
 
 //  Reset all bodies back to random values
 void resetBodies() {
-  for (int i = 0; i < NUMBODIES; i++) 
+  for (unsigned int i = 0; i < NUMBODIES; i++) 
     bodyList[i].setRandom(i);
 }
 
@@ -44,7 +44,7 @@ void init() {
 //  Draw each body, offset to be within 5-15 range in each direction
 void drawBodies() {
   glColor3f(1.0, 1.0, 0.0);
-  for (int currentBody = 0; currentBody < NUMBODIES; currentBody++) {
+  for (unsigned int currentBody = 0; currentBody < NUMBODIES; currentBody++) {
     glPushMatrix();
     glTranslatef(5, 5, 5);
     glTranslated(bodyList[currentBody].getPosX(), bodyList[currentBody].getPosY(), bodyList[currentBody].getPosZ());
@@ -56,12 +56,12 @@ void drawBodies() {
 //  Calculate the new forces, positions, and velocities for each body
 void updateBodyPositions() {
   //  Reset forces at each time step
-  for (int currentBody = 0; currentBody < NUMBODIES; currentBody++) {
+  for (unsigned int currentBody = 0; currentBody < NUMBODIES; currentBody++) {
     bodyList[currentBody].setForce(0, 0, 0);
   }
   //  N^2 Naive approach
-  for (int currentBody = 0; currentBody < NUMBODIES; currentBody++) {  
-    for (int otherBody = 0; otherBody < NUMBODIES; otherBody++) {
+  for (unsigned int currentBody = 0; currentBody < NUMBODIES; currentBody++) {  
+    for (unsigned int otherBody = 0; otherBody < NUMBODIES; otherBody++) {
       if (currentBody != otherBody) {
         updateBody(bodyList[currentBody], bodyList[otherBody]);
       }
@@ -187,7 +187,8 @@ void keyboard (unsigned char key, int x, int y) {
 
 void graphicsMain() {
   int argc = 1;
-  char* argv[] = {"NBody", NULL};
+  char title[] = "NBody";
+  char* argv[] = {title, NULL};
   glutInit (&argc, argv);
   glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize (500, 500); 

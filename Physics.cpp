@@ -31,7 +31,6 @@ void print(Body a, double bMass, double dist) {
 void updateBody(Body &a, Body &b) {
   double r[3] = {b.getPosX() - a.getPosX(), b.getPosY() - a.getPosY(), b.getPosZ() - a.getPosZ()};
   double acc[3] = {0.0};
-  double pos[3] = {0.0};
   double dist = distance(r);
 
   //  update force

@@ -11,9 +11,16 @@ FLAGS = -W -Wall -lGL -lGLU -lglut
 all: nbody
 
 clean:  
-	    /bin/rm -rf     \
-	    nbody		         \
-      *.o
+	    rm -rf *o nbody
         
-nbody:	
-	g++ -o nbody *.cpp $(FLAGS)
+nbody: main.cpp Graphics.o Physics.o Body.o	
+	g++ -o nbody main.cpp Graphics.o Physics.o Body.o
+	
+Graphics.o: Graphics.cpp
+	g++ -c -Wall Graphics.cpp
+	
+Physics.o: Physics.cpp
+	g++ -c -Wall Physics.cpp
+
+Body.o: Body.cpp
+	g++ -c -Wall Body.cpp

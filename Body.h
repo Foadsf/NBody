@@ -1,8 +1,9 @@
 #ifndef Body_H
 #define Body_H
 #include <vector>
-struct Body
+class Body
 {
+public:
   Body(void);
   ~Body(void);
 
@@ -44,6 +45,7 @@ struct Body
   void setNum(unsigned int numBody);
   unsigned int getNum();
 
+private:
   double posX, posY, posZ;
   double velX, velY, velZ;
   double mass;
