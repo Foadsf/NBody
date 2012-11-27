@@ -16,7 +16,7 @@ Body::~Body(void) {}
 void Body::setAll(double inAll[]) {
   posX = inAll[0]; posY = inAll[1]; posZ = inAll[2];
   velX = inAll[3]; velY = inAll[4]; velZ = inAll[5];
-  mass = inAll[6]; num = inAll[7];
+  mass = inAll[6]; num = (unsigned int) inAll[7];
 }
 void Body::setAll(double pX, double pY, double pZ,
                   double vX, double vY, double vZ, double m) {

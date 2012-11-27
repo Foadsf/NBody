@@ -17,7 +17,7 @@ double distance(double distances[]) {
 }
 
 //  Print out information for debugging purposes
-void print(Body a, double bMass, double dist) {
+void print(Body a) {
   std::cout << "Body: " << a.getNum() << std::endl;
   std::cout << "Forces " << a.getForceX() << " " << a.getForceY() << " " << a.getForceZ() << std::endl;
   std::cout << "Total force " << sqrt(a.getForceX()*a.getForceX() + 
@@ -34,13 +34,13 @@ void updateBody(Body &a, Body &b) {
   double dist = distance(r);
 
   //  update force
-  a.setForce( a.getForceX() + (G * r[0] * a.getMass() * b.getMass() /  powf(dist,3.0)),
-    a.getForceY() + (G * r[1] * a.getMass() * b.getMass() / powf(dist,3.0)),
-    a.getForceZ() + (G * r[2] * a.getMass() * b.getMass() / powf(dist,3.0)));
+  a.setForce( a.getForceX() + (G * r[0] * a.getMass() * b.getMass() /  pow(dist,3.0)),
+  a.getForceY() + (G * r[1] * a.getMass() * b.getMass() / pow(dist,3.0)),
+  a.getForceZ() + (G * r[2] * a.getMass() * b.getMass() / pow(dist,3.0)));
 
   //  update velocity
   for (int i = 0; i < 3; i++) {
-    acc[i] = G * b.getMass() * r[i] / powf(dist,3.0);
+    acc[i] = G * b.getMass() * r[i] / pow(dist,3.0);
   }
   a.setVel(a.getVelX() + acc[0], a.getVelY() + acc[1], a.getVelZ() + acc[2]);
 

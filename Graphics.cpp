@@ -10,13 +10,13 @@ bool reset = false;
 
 //  Camera
 struct cam {
-  float x;
-  float y;
-  float z;
+  double x;
+  double y;
+  double z;
 }c;
 
 //  For trig functions
-float degToRad(double degrees) {
+double degToRad(double degrees) {
   return degrees*PI/180.0f;
 }
 
@@ -71,7 +71,7 @@ void updateBodyPositions() {
 
 //  Box around the starting positions of the bodies, helps in visualizing movement
 void drawAxes() {
-  glColor3f(0.2, 0.2, 0.2);
+  glColor3d(0.2, 0.2, 0.2);
   glPushMatrix();
   glTranslatef(10, 10, 10);
   glutWireCube(10);

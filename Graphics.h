@@ -19,7 +19,7 @@ const double PI = 3.14159265;
 extern const unsigned int NUMBODIES;
 extern Body bodyList[];
 
-float degToRad(double degrees);
+double degToRad(double degrees);
 void resetBodies();
 void drawAxes();
 void keyboard();
