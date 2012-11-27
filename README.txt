@@ -11,6 +11,8 @@ over to Linux as possible before submitting.
 
 Both the program and the OpenCL kernel are in 32 bit, but this might be changed to 64 bit for the final program. 
 
+The makefile "should" be correct for linking and using the OpenCL libraries, but there was no way for me to verify this. 
+
 Controls:
 	W/S : Zoom in and out of the center 
 	A/D : Rotate around the center horizontally
