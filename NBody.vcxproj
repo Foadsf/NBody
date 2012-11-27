@@ -89,6 +89,9 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Physics.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="nbody.cl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
