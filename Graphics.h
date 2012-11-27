@@ -34,6 +34,7 @@ double degToRad(double degrees);
 void resetBodies();
 void loadFile();
 void setupOpencl();
+void fillBodies();
 void drawAxes();
 void keyboard();
 void graphicsMain();

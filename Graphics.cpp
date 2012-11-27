@@ -9,7 +9,8 @@ bool reset = false;
 bool cpu = true, pause = false;
 FILE* fp; char *sourceStr; size_t sourceSize;
 
-cl_platform_id platformID = NULL;
+cl_platform_id platformIDs[5];
+cl_platform_id platformID;
 cl_device_id deviceID = NULL;
 cl_uint numDevices, numPlatforms;
 cl_int status;
@@ -84,10 +85,18 @@ void drawBodies() {
 
 void setupOpencl() {
 	globalSize = NUMBODIES;
-	localSize = 32;
+	localSize = 10;
 
-	status = clGetPlatformIDs(1, &platformID, &numPlatforms);
-	status = clGetDeviceIDs(platformID, CL_DEVICE_TYPE_GPU, 1, &deviceID, &numDevices);
+	status = clGetPlatformIDs(5, platformIDs, &numPlatforms);
+	for (int i = 0; i < numPlatforms; i++) {
+		status = clGetDeviceIDs(platformIDs[i], CL_DEVICE_TYPE_GPU, 1, &deviceID, &numDevices);
+		if(numDevices != 0) {
+			platformID = platformIDs[i];
+			break;
+		}
+	}
+	if (numDevices == 0)
+		std::cout << "No GPU devices were found\n";
 	context = clCreateContext(NULL, 1, &deviceID, NULL, NULL, &status);
 	commandQueue = clCreateCommandQueue(context, deviceID, 0, &status);
   program = clCreateProgramWithSource(context, 1, (const char **)&sourceStr, (const size_t *)&sourceSize, &status);
@@ -111,16 +120,21 @@ void setupOpencl() {
 	status = clSetKernelArg(kernel, 5, sizeof(cl_mem), (void*)&velZMem);
 	status = clSetKernelArg(kernel, 6, sizeof(cl_mem), (void*)&massMem);
 	status = clSetKernelArg(kernel, 7, sizeof(cl_mem), (void*)&numMem);
+
+	
 }
 
 void updateOpencl() {
 	status = clEnqueueNDRangeKernel(commandQueue, kernel, 1, NULL, &globalSize, &localSize, 0, NULL, NULL);
+	//std::cout << "Status in updateOpencl() = " << status << std::endl;
 }
 
 void loadFile() {
 	fp = fopen("nbody.cl", "r");
 	if (!fp) {
 		std::cout << "Kernel was not loaded properly\n";
+	} else {
+		std::cout << "Kernel was loaded\n";
 	}
 	sourceStr = new char[1048576];
 	sourceSize = fread(sourceStr, 1, 1048576, fp);
@@ -139,15 +153,38 @@ void fillVectors() {
 		bodyMass[i] = bodyList[i].getMass();
 		bodyNum[i] = bodyList[i].getNum();
 	}
-	clEnqueueWriteBuffer(commandQueue, posXMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyPosX, 0, NULL, NULL);
-	clEnqueueWriteBuffer(commandQueue, posYMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyPosY, 0, NULL, NULL);
-	clEnqueueWriteBuffer(commandQueue, posZMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyPosZ, 0, NULL, NULL);
-	clEnqueueWriteBuffer(commandQueue, velXMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyVelX, 0, NULL, NULL);
-	clEnqueueWriteBuffer(commandQueue, velYMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyVelY, 0, NULL, NULL);
-	clEnqueueWriteBuffer(commandQueue, velZMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyVelZ, 0, NULL, NULL);
-	clEnqueueWriteBuffer(commandQueue, massMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyMass, 0, NULL, NULL);
-	clEnqueueWriteBuffer(commandQueue, numMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyNum, 0, NULL, NULL);
-  
+	status = clEnqueueWriteBuffer(commandQueue, posXMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyPosX, 0, NULL, NULL);
+	status = clEnqueueWriteBuffer(commandQueue, posYMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyPosY, 0, NULL, NULL);
+	status = clEnqueueWriteBuffer(commandQueue, posZMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyPosZ, 0, NULL, NULL);
+	status = clEnqueueWriteBuffer(commandQueue, velXMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyVelX, 0, NULL, NULL);
+	status = clEnqueueWriteBuffer(commandQueue, velYMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyVelY, 0, NULL, NULL);
+	status = clEnqueueWriteBuffer(commandQueue, velZMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyVelZ, 0, NULL, NULL);
+	status = clEnqueueWriteBuffer(commandQueue, massMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyMass, 0, NULL, NULL);
+	status = clEnqueueWriteBuffer(commandQueue, numMem, CL_TRUE, 0, NUMBODIES * sizeof(unsigned int), bodyNum, 0, NULL, NULL); 
+	//std::cout << "Status in fillvectors() = " << status << std::endl;
+}
+
+void readBackData() {
+	status = clEnqueueReadBuffer(commandQueue, posXMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyPosX, 0, NULL, NULL);
+	status = clEnqueueReadBuffer(commandQueue, posYMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyPosY, 0, NULL, NULL);
+	status = clEnqueueReadBuffer(commandQueue, posZMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyPosZ, 0, NULL, NULL);
+	status = clEnqueueReadBuffer(commandQueue, velXMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyVelX, 0, NULL, NULL);
+	status = clEnqueueReadBuffer(commandQueue, velYMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyVelY, 0, NULL, NULL);
+	status = clEnqueueReadBuffer(commandQueue, velZMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyVelZ, 0, NULL, NULL);
+	status = clEnqueueReadBuffer(commandQueue, massMem, CL_TRUE, 0, NUMBODIES * sizeof(double), bodyMass, 0, NULL, NULL);
+	status = clEnqueueReadBuffer(commandQueue, numMem, CL_TRUE, 0, NUMBODIES * sizeof(unsigned int), bodyNum, 0, NULL, NULL);
+
+	//std::cout << "Status in readBackData() = " << status << std::endl;
+	fillBodies();
+}
+
+void fillBodies() {
+	for (unsigned int i = 0; i < NUMBODIES; i++) {
+		bodyList[i].setPos(bodyPosX[i], bodyPosY[i], bodyPosZ[i]); 
+		bodyList[i].setVel(bodyVelX[i], bodyVelY[i], bodyVelZ[i]);
+		bodyList[i].setMass(bodyMass[i]);
+		bodyList[i].setNum(bodyNum[i]);
+	}
 }
 
 //  Calculate the new forces, positions, and velocities for each body
@@ -157,7 +194,8 @@ void updateBodyPositions() {
 		bodyList[currentBody].setForce(0, 0, 0);
 	}
 	//  N^2 Naive approach
-	if (cpu) {
+	if (pause) {
+	} else if (cpu) {
 		for (unsigned int currentBody = 0; currentBody < NUMBODIES; currentBody++) {  
 			for (unsigned int otherBody = 0; otherBody < NUMBODIES; otherBody++) {
 				if (currentBody != otherBody) {
@@ -165,9 +203,10 @@ void updateBodyPositions() {
 				}
 			}
 		}
-	} else {
+	} else if (!cpu) {
 		fillVectors();
 		updateOpencl();
+		readBackData();
 	}
 }
 
