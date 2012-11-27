@@ -1,3 +1,4 @@
+#pragma OPENCL EXTENSION cl_khr_fp64 : enable
 __kernel void nbody(
 	__global double *posX, __global double *posY, __global double *posZ,
 	__global double *velX, __global double *velY, __global double *velZ,
