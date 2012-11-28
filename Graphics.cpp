@@ -6,7 +6,7 @@ float cx, cy, cz;
 float aspectRatio = 1.0;
 float AR = 1.0;
 bool reset = false;
-bool cpu = true, pause = false;
+bool cpu = true, halt = false;
 FILE* fp; char *sourceStr; size_t sourceSize;
 
 cl_platform_id platformIDs[5];
@@ -88,7 +88,7 @@ void setupOpencl() {
 	localSize = 10;
 
 	status = clGetPlatformIDs(5, platformIDs, &numPlatforms);
-	for (int i = 0; i < numPlatforms; i++) {
+	for (unsigned int i = 0; i < numPlatforms; i++) {
 		status = clGetDeviceIDs(platformIDs[i], CL_DEVICE_TYPE_GPU, 1, &deviceID, &numDevices);
 		if(numDevices != 0) {
 			platformID = platformIDs[i];
@@ -194,7 +194,7 @@ void updateBodyPositions() {
 		bodyList[currentBody].setForce(0, 0, 0);
 	}
 	//  N^2 Naive approach
-	if (pause) {
+	if (halt) {
 	} else if (cpu) {
 		for (unsigned int currentBody = 0; currentBody < NUMBODIES; currentBody++) {  
 			for (unsigned int otherBody = 0; otherBody < NUMBODIES; otherBody++) {
@@ -284,7 +284,7 @@ void keyboard (unsigned char key, int x, int y) {
 	} else if (key == 'm') {
 		cpu = !cpu;
 	} else if (key == 'p') {
-		pause = !pause;
+		halt = !halt;
 	}
 	c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
 	c.y = cy * cos(degToRad(cPhi));
