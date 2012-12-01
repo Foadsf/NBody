@@ -11,10 +11,11 @@ Things that work:
 - OpenCL Version
 - Camera controls via keyboard
 - Switching between C++ and OpenCL
+- Linux compatability
 
 Things that need to be fixed:
 - General code cleanup and relocation
-- Linux compatability
+- Bodies flickering (linux only?)
 
 Things that will be added to final:
 - O(n log n) Barnes-Hut algorithm

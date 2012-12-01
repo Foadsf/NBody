@@ -5,17 +5,12 @@
 #include <stdlib.h>
 #include "CL/cl.h"
 
-const unsigned int NUMBODIES = 100;
-Body bodyList[NUMBODIES];
-double *bodyPosX; double *bodyPosY; double *bodyPosZ;
-double *bodyVelX; double *bodyVelY; double *bodyVelZ;
-double *bodyMass;
-unsigned int* bodyNum;
+std::vector<Body> bodyList;
+unsigned int NUMBODIES = 100;
 
 int main() {
+  bodyList.resize(NUMBODIES);
   srand((unsigned int)time(NULL));
-  
-
   graphicsMain();
   return 0;
 }

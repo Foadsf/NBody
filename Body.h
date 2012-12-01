@@ -1,6 +1,10 @@
 #ifndef Body_H
 #define Body_H
+
 #include <vector>
+
+double fRand(double fMin, double fMax);
+
 class Body
 {
 public:
@@ -52,4 +56,5 @@ private:
   double forceX, forceY, forceZ;
   unsigned int num;
 };
+
 #endif
