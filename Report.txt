@@ -13,17 +13,20 @@ Things that are done:
 - Switching between C++ and OpenCL
 - Linux compatability
 - General code cleanup and relocation
+- OpenMP version of CPU-based code
+- Bodies flickering (linux only?) // fixed via double buffering
+- Adjustable # of bodies // currently as command line arg
 
 Things that need to be fixed:
-- Bodies flickering (linux only?)
+
 
 Things that will be added to final:
 - O(n log n) Barnes-Hut algorithm
 - OpenGL / OpenCL interop
 - Mouse control
 - Interesting test cases rather than random body placement
-- Adjustable # of bodies
-- OpenMP version of CPU-based code
+
+
 
 Things that would be nice to add to the final:
 - Interactive placement of bodies/wells

@@ -8,7 +8,9 @@
 std::vector<Body> bodyList;
 unsigned int NUMBODIES = 500;
 
-int main() {
+int main(int argc, char* argv[]) {
+  if (argc > 1) 
+		NUMBODIES = atoi(argv[1]);
   bodyList.resize(NUMBODIES);
   srand((unsigned int)time(NULL));
   graphicsMain();
