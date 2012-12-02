@@ -53,6 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Libraries\Freeglut\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v4.2\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -1,6 +1,7 @@
 #ifndef Graphics_H
 #define Graphics_H
 
+#include <omp.h>
 #include "OCL.h"
 #include "Body.h"
 #include "Physics.h"
@@ -9,6 +10,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <GL/glut.h>
+#include <sstream>
 #ifdef _WIN32
 #include <Windows.h>
 #endif
