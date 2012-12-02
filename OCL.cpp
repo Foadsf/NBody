@@ -36,7 +36,7 @@ void setupVectors() {
 
 void setupOpencl() {
 	globalSize = NUMBODIES;
-	localSize = 10;
+	localSize = 1;
 
 	status = clGetPlatformIDs(5, platformIDs, &numPlatforms);
 	for (unsigned int i = 0; i < numPlatforms; i++) {
@@ -71,6 +71,7 @@ void setupOpencl() {
 	status = clSetKernelArg(kernel, 5, sizeof(cl_mem), (void*)&velZMem);
 	status = clSetKernelArg(kernel, 6, sizeof(cl_mem), (void*)&massMem);
 	status = clSetKernelArg(kernel, 7, sizeof(cl_mem), (void*)&numMem);
+	status = clSetKernelArg(kernel, 8, sizeof(unsigned int), &NUMBODIES);
 }
 
 void updateOpencl() {
@@ -127,6 +128,7 @@ void readBackData() {
 	fillBodies();
 }
 
+//  Place the update information from the kernel into the canonical list so it can be used by different functions
 void fillBodies() {
 	for (unsigned int i = 0; i < NUMBODIES; i++) {
 		bodyList[i].setPos(bodyPosX[i], bodyPosY[i], bodyPosZ[i]); 

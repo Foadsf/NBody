@@ -2,13 +2,13 @@
 __kernel void nbody(
 	__global double *posX, __global double *posY, __global double *posZ,
 	__global double *velX, __global double *velY, __global double *velZ,
-	__global double *mass, __global unsigned int *num) 
+	__global double *mass, __global unsigned int *num, int NUMBODIES) 
 	{
 	
 	  double G = 6.6726E-11;
 	  int a = get_global_id(0);
 	  double forceX = 0.0, forceY = 0.0, forceZ = 0.0;
-	  for (int b = 0; b < 100; b++) {
+	  for (int b = 0; b < NUMBODIES; b++) {
 		if (a != b) {
 			double r[3] = {posX[b] - posX[a], posY[b] - posY[a], posZ[b] - posZ[a]};
 			double acc[3] = {0.0};

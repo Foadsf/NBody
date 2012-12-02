@@ -6,7 +6,7 @@
 #include "CL/cl.h"
 
 std::vector<Body> bodyList;
-unsigned int NUMBODIES = 100;
+unsigned int NUMBODIES = 500;
 
 int main() {
   bodyList.resize(NUMBODIES);
