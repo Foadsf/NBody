@@ -36,7 +36,7 @@ void setupVectors() {
 
 void setupOpencl() {
 	globalSize = NUMBODIES;
-	localSize = 1;
+	localSize = 50;
 
 	status = clGetPlatformIDs(5, platformIDs, &numPlatforms);
 	for (unsigned int i = 0; i < numPlatforms; i++) {

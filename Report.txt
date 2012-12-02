@@ -31,5 +31,5 @@ Things that will be added to final:
 Things that would be nice to add to the final:
 - Interactive placement of bodies/wells
 - Visual representation of the O(n log n) algorithms on the screen
-- OpenMP or other methods
+- Other computational libraries/methods
 - Better visual style for the simulation (trails, forces, etc.)

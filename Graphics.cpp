@@ -12,8 +12,6 @@ extern unsigned int NUMBODIES;
 
 const double PI = 3.14159265;
 
-
-
 #define UNUSED(x) ((void)(x))
 
 //  Camera
