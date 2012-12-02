@@ -36,7 +36,10 @@ void setupVectors() {
 
 void setupOpencl() {
 	globalSize = NUMBODIES;
-	localSize = 50;
+if(NUMBODIES >= 512) 
+	localSize = 256;
+else
+	localSize = 32;
 
 	status = clGetPlatformIDs(5, platformIDs, &numPlatforms);
 	for (unsigned int i = 0; i < numPlatforms; i++) {
@@ -75,7 +78,7 @@ void setupOpencl() {
 }
 
 void updateOpencl() {
-	status = clEnqueueNDRangeKernel(commandQueue, kernel, 1, NULL, &globalSize, &localSize, 0, NULL, NULL);
+	status = clEnqueueNDRangeKernel(commandQueue, kernel, 1, NULL, &globalSize, NULL, 0, NULL, NULL);
 	//std::cout << "Status in updateOpencl() = " << status << std::endl;
 }
 
