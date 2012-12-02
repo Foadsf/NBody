@@ -17,4 +17,4 @@ void updateOpencl();
 void readBackData();
 void fillBodies();
 
-#endif OCL_H
+#endif

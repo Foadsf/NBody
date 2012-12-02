@@ -66,10 +66,6 @@ void drawBodies() {
 	}
 }
 
-
-
-
-
 //  Calculate the new forces, positions, and velocities for each body
 void updateBodyPositions() {
 	//  Reset forces at each time step
@@ -79,6 +75,7 @@ void updateBodyPositions() {
 	//  N^2 Naive approach
 	if (halt) {
 	} else if (cpu) {
+#pragma omp parallel for
 		for (unsigned int currentBody = 0; currentBody < NUMBODIES; currentBody++) {  
 			for (unsigned int otherBody = 0; otherBody < NUMBODIES; otherBody++) {
 				if (currentBody != otherBody) {
@@ -117,7 +114,7 @@ void display(void)
 	drawBodies();
 	updateBodyPositions();
 	glLoadIdentity();
-	glFlush();
+	glutSwapBuffers();
 }
 
 //  Standard reshape function
@@ -180,7 +177,7 @@ void graphicsMain() {
 	char title[] = "NBody";
 	char* argv[] = {title, NULL};
 	glutInit (&argc, argv);
-	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize (500, 500); 
 	glutInitWindowPosition (100, 100);
 	glutCreateWindow (argv[0]);
