@@ -6,7 +6,7 @@
 #include "CL/cl.h"
 
 std::vector<Body> bodyList;
-unsigned int NUMBODIES = 500;
+unsigned int NUMBODIES = 2000;
 
 int main(int argc, char* argv[]) {
   if (argc > 1) 

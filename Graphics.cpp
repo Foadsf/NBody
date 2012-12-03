@@ -9,7 +9,7 @@ float aspectRatio = 1.0;
 float AR = 1.0;
 bool reset = false;
 bool halt = false;
-int mode = 0;
+int mode = 2;
 extern std::vector<Body> bodyList;
 extern unsigned int NUMBODIES;
 
@@ -62,7 +62,7 @@ void drawBodies() {
     glPushMatrix();
     glTranslatef(5, 5, 5);
     glTranslated(bodyList[currentBody].getPosX(), bodyList[currentBody].getPosY(), bodyList[currentBody].getPosZ());
-    glutSolidSphere(0.05, 10, 10);
+    glutSolidSphere(0.025, 10, 10);
     glPopMatrix();
   }
 }
