@@ -14,6 +14,7 @@ extern std::vector<Body> bodyList;
 extern unsigned int NUMBODIES;
 
 const double PI = 3.14159265;
+float lastX, lastY;
 
 #define UNUSED(x) ((void)(x))
 
@@ -76,8 +77,8 @@ void updateBodyPositions() {
   //  N^2 Naive approach
   if (halt) {
   } else if (mode == 0) {
-    for (int currentBody = 0; currentBody < NUMBODIES; currentBody++) {  
-      for (int otherBody = 0; otherBody < NUMBODIES; otherBody++) {
+    for (unsigned int currentBody = 0; currentBody < NUMBODIES; currentBody++) {  
+      for (unsigned int otherBody = 0; otherBody < NUMBODIES; otherBody++) {
         if (currentBody != otherBody) {
           updateBody(bodyList[currentBody], bodyList[otherBody]);
         }
@@ -124,6 +125,7 @@ void display(void)
   updateBodyPositions();
   glLoadIdentity();
   glutSwapBuffers();
+  glutPostRedisplay();
 }
 
 //  Standard reshape function
@@ -178,7 +180,7 @@ void keyboard (unsigned char key, int x, int y) {
   c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
   c.y = cy * cos(degToRad(cPhi));
   c.z = cz * cos(degToRad(cTheta)) * sin(degToRad(cPhi));
-  display();
+	glutPostRedisplay();
 
   std::ostringstream title;
   if (mode == 0)
@@ -189,6 +191,10 @@ void keyboard (unsigned char key, int x, int y) {
     title << "OpenCL";
   std::string dup_title = title.str();
   glutSetWindowTitle(dup_title.c_str());
+}
+
+void mouse(int x, int y) {
+
 }
 
 void graphicsMain() {
@@ -204,6 +210,7 @@ void graphicsMain() {
   glutDisplayFunc(display); 
   glutReshapeFunc(reshape);
   glutKeyboardFunc(keyboard);
+	glutPassiveMotionFunc(mouse);
   glutIdleFunc(display);
   glutMainLoop();
 }

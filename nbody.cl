@@ -18,7 +18,7 @@ __kernel void nbody(
 			for (int i = 0; i < 3; i++) {
 				dist = dist + r[i]*r[i];
 			}
-			dist = sqrt(dist + 0.1*0.1);
+			dist = sqrt(dist + 1.1*1.1);
 
 			forceX = forceX + G*r[0]*mass[a]*mass[b]/pow((float)dist,(float)3.0);
 			forceY = forceY + G*r[1]*mass[a]*mass[b]/pow((float)dist,(float)3.0);
