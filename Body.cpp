@@ -3,6 +3,8 @@
 #include <time.h>
 #include <stdlib.h>
 
+extern bool shape;
+
 //  Random number between two points (inclusive)
 double fRand(double fMin, double fMax) {
   double f = (double)rand() / RAND_MAX;
@@ -28,7 +30,10 @@ void Body::setAll(double pX, double pY, double pZ,
 //  Randomize values
 void Body::setRandom(unsigned int numBody) {
   posX = fRand(0.0, 10.0);
-  posY = fRand(0.0, 10.0);
+  if (shape)
+   posY = fRand(5.0, 5.0);
+  else
+    posY = fRand(0.0, 10.0);
   posZ = fRand(0.0, 10.0);
   velX = fRand(-0.000001, 0.000001);
   velY = fRand(-0.000001, 0.000001);

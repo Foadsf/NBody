@@ -18,5 +18,6 @@ Controls:
 	Q/E : Rotate around the center vertically
 	R	: Restart the simulation with randomized values
 	M	: Change between CPU / OpenMP / OpenCL modes (default = OpenCL)
+	N	: Change the shape of the body distribution from 2D to 3D
 	P	: Pause the current state of the program
 	ESC	: Exit the program

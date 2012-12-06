@@ -2,9 +2,15 @@ Pate Motter
 N-Body Problem
 Status Report
 
-So far the n-body program has been coming along fairly well. As of now the C++ version of the code works very well and the
-OpenCL version seems to be functioning the same. Getting the OpenCL version to work was not very straightforward and took more 
-time than I was expecting. 
+The serial CPU, OpenCL, and OpenMP versions of the brute-force n-body calculations are all working.
+The difference between the three is very noticable at > 1000 bodies on my personal machines. The OpenCL version
+runs essentially in real-time for bodies >= 2000 while the OpenMP version is noticable slower and the serialized version
+is even slower still, taking many seconds to move a single time-step. 
+
+My current focus is implementing the Barnes Hut algorithm. The algorithm uses an octree to organize the bodies and
+then uses an approximation of the center of mass for distant objects relative to a specific body. The accuracy and precision
+of the calculations are slightly degraded, but the algorithm runs in O(n log n) as opposed to O(n^2) of the direct
+comparison method that has already been completed. 
 
 Things that are done:
 - C++ Version w/ OpenMP
@@ -16,12 +22,16 @@ Things that are done:
 - OpenMP version of CPU-based code
 - Double buffering to eliminate flickering bodies
 - Adjustable # of bodies // currently as command line arg
+- Basic Octree skeleton and insertion
 
 Things that need to be fixed:
-- Octree
+- Testing octree correctness
+- Navigate octree
+- Use octree to calculate forces (Barnes Hut)
 
 Things that will be added to final:
-- O(n log n) Barnes-Hut algorithm
+- O(n log n) Barnes-Hut algorithm  
+- GPU version of Barnes Hut (tree porting proving difficult)
 - OpenGL / OpenCL interop
 - Mouse control
 - Interesting test cases rather than random body placement

@@ -5,7 +5,7 @@
 //  Constants of physics calculations
 const double G = 6.6726E-11;
 const double EPS = 0.1;
-const double DAMP = 0.1;
+const double DAMP = 1.1;
 
 //  Distance between two bodies w/ dampening applied
 double distance(double distances[]) {

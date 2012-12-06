@@ -9,6 +9,7 @@ float aspectRatio = 1.0;
 float AR = 1.0;
 bool reset = false;
 bool halt = false;
+bool shape = false;
 int mode = 2;
 extern std::vector<Body> bodyList;
 extern unsigned int NUMBODIES;
@@ -63,7 +64,7 @@ void drawBodies() {
     glPushMatrix();
     glTranslatef(5, 5, 5);
     glTranslated(bodyList[currentBody].getPosX(), bodyList[currentBody].getPosY(), bodyList[currentBody].getPosZ());
-    glutSolidSphere(0.025, 10, 10);
+    glutSolidSphere(0.015, 10, 10);
     glPopMatrix();
   }
 }
@@ -159,13 +160,13 @@ void keyboard (unsigned char key, int x, int y) {
       cPhi = 3;
     //  Zoom in/out
   } else  if (key=='w') {
-    cx -= 0.25;
-    cy -= 0.25;
-    cz -= 0.25;
+    cx -= 0.4;
+    cy -= 0.4;
+    cz -= 0.4;
   } else  if (key=='s') {
-    cx += 0.25;
-    cy += 0.25;
-    cz += 0.25;
+    cx += 0.4;
+    cy += 0.4;
+    cz += 0.4;
     //  Close the program
   } else  if (key==27) {
     exit(0);
@@ -176,6 +177,9 @@ void keyboard (unsigned char key, int x, int y) {
     mode = (mode + 1) % 3;
   } else if (key == 'p') {
     halt = !halt;
+  } else if (key == 'n') {
+    shape = !shape;
+    resetBodies();
   }
   c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
   c.y = cy * cos(degToRad(cPhi));

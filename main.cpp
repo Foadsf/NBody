@@ -7,14 +7,14 @@
 #include "CL/cl.h"
 
 std::vector<Body> bodyList;
-unsigned int NUMBODIES = 1000;
+unsigned int NUMBODIES = 2000;
 
 int main(int argc, char* argv[]) {
   if (argc > 1) 
 		NUMBODIES = atoi(argv[1]);
   bodyList.resize(NUMBODIES);
   srand((unsigned int)time(NULL));
-  //graphicsMain();
+  graphicsMain();
   
   
   double center[3] = {5.0, 5.0, 5.0};
