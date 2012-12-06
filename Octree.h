@@ -36,5 +36,6 @@ struct OctNode {
 	}
 };
 
+void find(unsigned int bodyNum);
 void insert(OctNode *&root, Body b, double inCenter[], double size);
 #endif

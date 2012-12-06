@@ -23,7 +23,9 @@ int main(int argc, char* argv[]) {
   a.setRandom(0);
 	b.setRandom(1);
   OctNode* root = NULL;
-	insert(root, a, center, size); 
-	insert(root, b, center, size);
+	for (int i = 0; i < NUMBODIES; i++) {
+		bodyList[i].setRandom(i);
+		insert(root, bodyList[i], center, size);
+	}
   return 0;
 }
