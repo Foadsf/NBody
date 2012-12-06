@@ -84,12 +84,14 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OCL.cpp" />
+    <ClCompile Include="Octree.cpp" />
     <ClCompile Include="Physics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Body.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="OCL.h" />
+    <ClInclude Include="Octree.h" />
     <ClInclude Include="Physics.h" />
   </ItemGroup>
   <ItemGroup>

@@ -21,18 +21,9 @@ int main(int argc, char* argv[]) {
   double size = 5.0;
   Body a, b, c, d, e, f; 
   a.setRandom(0);
-  OctNode* root;
-  root = new OctNode(a, center, size);
-  insert(root, a, center, size);
-  
-  
-  b.setRandom(1);
-  c.setRandom(2);
-  d.setRandom(3);
-  e.setRandom(4);
-  f.setRandom(5);
-  
-  
-  
+	b.setRandom(1);
+  OctNode* root = NULL;
+	insert(root, a, center, size); 
+	insert(root, b, center, size);
   return 0;
 }

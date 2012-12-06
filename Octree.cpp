@@ -1,37 +1,32 @@
 #include "Octree.h"
 
-void insert(OctNode *&root, Body b, double inCenter[], double size) {
+void insert(OctNode *&root, Body b, double inCenter[], double inSize) {
 	//  determine where the particle is located compared to the current center
-	bool x, y, z;
-	//x = (b.getPosX() >= inCenter[0]) ? true : false;
-	//y = (b.getPosY() >= inCenter[1]) ? true : false;
-	//z = (b.getPosZ() >= inCenter[2]) ? true : false;
-	//double newCenter[3] = {inCenter[0]/= 2.0, inCenter[1]/= 2.0, inCenter[2]/= 2.0};
-	//size /= 2.0;
-	double newCenter[3] {1,1,1};
-	double newSize = 5.24;
-	
-	insert(root->ppp, b, newCenter, newSize);
-	
-	if (x && y && z) {							//ppp
-		//insert(root, b, inCenter, size);
+	bool x = 0, y = 0, z = 0;
+	x = (b.getPosX() >= inCenter[0]) ? true : false;
+	y = (b.getPosY() >= inCenter[1]) ? true : false;
+	z = (b.getPosZ() >= inCenter[2]) ? true : false;
+
+	double newCenter[3] = {inCenter[0], inCenter[1], inCenter[2]};
+	double newSize = inSize/2.0;
+
+	if (root == NULL) {							//NULL
+		root = new OctNode(b, inCenter, inSize);
+	} else if (x && y && z) {				//ppp
+		insert(root->ppp, b, newCenter, newSize);
 	} else if (x && y && !z) { 			//ppn
-	
+		insert(root->ppn, b, newCenter, newSize);
 	} else if (x && !y && z) { 			//pnp
-	
+		insert(root->pnp, b, newCenter, newSize);
 	} else if (x && !y && !z) { 		//pnn
-	
+		insert(root->pnn, b, newCenter, newSize);
 	} else if (!x && y && z) { 			//npp
-	
+		insert(root->npp, b, newCenter, newSize);
 	} else if (!x && y && !z) { 		//npn
-	
+		insert(root->npn, b, newCenter, newSize);
 	} else if (!x && !y && z) { 		//nnp
-	
+		insert(root->nnp, b, newCenter, newSize);
 	} else if (!x && !y && !z) { 		//nnn
-	
+		insert(root->nnn, b, newCenter, newSize);
 	}
-		
-		std::cout << "body:" << b.getNum() << std::endl;
-		std::cout << "size:" << size << std::endl;
-		std::cout << "center:" << inCenter[0] << "," << inCenter[1] << "," << inCenter[2] << std::endl;
 }
