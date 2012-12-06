@@ -19,9 +19,6 @@ void insert(OctNode *&root, Body b, double inCenter[], double inSize) {
 	newCenter[1] += (y) ? newSize : -newSize;
 	newCenter[2] += (z) ? newSize : -newSize;
 
-
-
-
 	if (root == NULL) {							//NULL
 		root = new OctNode(b, inCenter, inSize);
 	} else if (x && y && z) {				//ppp
@@ -42,5 +39,9 @@ void insert(OctNode *&root, Body b, double inCenter[], double inSize) {
 		insert(root->nnn, b, newCenter, newSize);
 	}	
 
+  //  update each node based on the bodies that pass through it
   root->totalMass += b.getMass();
+  root->centerOfMass[0] = (b.getMass()*b.getPosX() + root->totalMass*root->centerOfMass[0])  / root->totalMass;
+  root->centerOfMass[1] = (b.getMass()*b.getPosY() + root->totalMass*root->centerOfMass[1])  / root->totalMass;
+  root->centerOfMass[2] = (b.getMass()*b.getPosZ() + root->totalMass*root->centerOfMass[2])  / root->totalMass;
 }
