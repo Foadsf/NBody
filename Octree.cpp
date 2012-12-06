@@ -5,19 +5,22 @@ void find(unsigned int bodyNum) {
 }
 
 void insert(OctNode *&root, Body b, double inCenter[], double inSize) {
+
 	//  determine where the particle is located compared to the current center
 	bool x = 0, y = 0, z = 0;
 	x = (b.getPosX() >= inCenter[0]) ? true : false;
 	y = (b.getPosY() >= inCenter[1]) ? true : false;
 	z = (b.getPosZ() >= inCenter[2]) ? true : false;
 
+  //  determine the new recursive center/size 
 	double newSize = inSize/2.0;
 	double newCenter[3] = {inCenter[0], inCenter[1], inCenter[2]};
 	newCenter[0] += (x) ? newSize : -newSize;
 	newCenter[1] += (y) ? newSize : -newSize;
 	newCenter[2] += (z) ? newSize : -newSize;
 
-	std::cout << newSize << std::endl;
+
+
 
 	if (root == NULL) {							//NULL
 		root = new OctNode(b, inCenter, inSize);
@@ -38,4 +41,6 @@ void insert(OctNode *&root, Body b, double inCenter[], double inSize) {
 	} else if (!x && !y && !z) { 		//nnn
 		insert(root->nnn, b, newCenter, newSize);
 	}	
+
+  root->totalMass += b.getMass();
 }

@@ -6,8 +6,11 @@
 
 struct OctNode {
 	double center[3];
-	double size;
+  double centerOfMass[3];
+  double totalMass;
+  double size;
 	Body b;
+
 	
 	//  Children
 	OctNode *ppp;
@@ -21,8 +24,11 @@ struct OctNode {
 	
 	OctNode(Body inBody, double inCenter[], double inSize) {
 		b = inBody;
-		for (int i = 0; i < 3; i++)
-			center[i] = inCenter[i];
+    totalMass = 0.0;
+		for (int i = 0; i < 3; i++) {
+		  centerOfMass[i] = 0.0;
+      center[i] = inCenter[i];
+    }
 		size = inSize;
 		
 		ppp = NULL;
