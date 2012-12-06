@@ -113,10 +113,10 @@ void drawAxes() {
 //  Update bodies and view
 void display(void)
 {
+  clock_t begin = clock();
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-
   gluPerspective(50, AR, 1, 60);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -127,6 +127,9 @@ void display(void)
   glLoadIdentity();
   glutSwapBuffers();
   glutPostRedisplay();
+  clock_t end = clock();
+  double timeTaken = end - begin;
+  title(timeTaken);
 }
 
 //  Standard reshape function
@@ -184,8 +187,10 @@ void keyboard (unsigned char key, int x, int y) {
   c.x = cx * sin(degToRad(cTheta)) * sin(degToRad(cPhi));
   c.y = cy * cos(degToRad(cPhi));
   c.z = cz * cos(degToRad(cTheta)) * sin(degToRad(cPhi));
-	glutPostRedisplay();
+	glutPostRedisplay();  
+}
 
+void title(double inTime) {
   std::ostringstream title;
   if (mode == 0)
     title << "CPU";
@@ -193,6 +198,9 @@ void keyboard (unsigned char key, int x, int y) {
     title << "OpenMP";
   else if (mode == 2)
     title << "OpenCL";
+
+  inTime = 1000/inTime;
+  title << "\tTime: " << inTime;
   std::string dup_title = title.str();
   glutSetWindowTitle(dup_title.c_str());
 }

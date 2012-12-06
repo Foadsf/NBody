@@ -23,7 +23,7 @@
 
 double degToRad(double degrees);
 void resetBodies();
-
+void title(double inTime);
 void fillBodies();
 void drawAxes();
 void keyboard();
