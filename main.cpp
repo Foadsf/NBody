@@ -13,6 +13,6 @@ int main(int argc, char* argv[]) {
 		NUMBODIES = atoi(argv[1]);
   bodyList.resize(NUMBODIES);
   srand((unsigned int)time(NULL));
-  graphicsMain();
+  //graphicsMain();
   return 0;
 }
