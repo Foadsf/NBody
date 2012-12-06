@@ -7,26 +7,24 @@ OpenCL version seems to be functioning the same. Getting the OpenCL version to w
 time than I was expecting. 
 
 Things that are done:
-- C++ Version
+- C++ Version w/ OpenMP
 - OpenCL Version
 - Camera controls via keyboard
-- Switching between C++ and OpenCL
+- Switching between C++ and OpenCL and OpenMP seemlessly
 - Linux compatability
 - General code cleanup and relocation
 - OpenMP version of CPU-based code
-- Bodies flickering (linux only?) // fixed via double buffering
+- Double buffering to eliminate flickering bodies
 - Adjustable # of bodies // currently as command line arg
 
 Things that need to be fixed:
-
+- Octree
 
 Things that will be added to final:
 - O(n log n) Barnes-Hut algorithm
 - OpenGL / OpenCL interop
 - Mouse control
 - Interesting test cases rather than random body placement
-
-
 
 Things that would be nice to add to the final:
 - Interactive placement of bodies/wells
