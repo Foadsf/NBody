@@ -54,7 +54,7 @@ void init() {
   glClearColor (0.0, 0.0, 0.0, 0.0);
   glEnable(GL_DEPTH_TEST); 		       // Enable depth buffering
   resetBodies();
-
+  title();
 }
 
 //  Draw each body, offset to be within 5-15 range in each direction
@@ -113,7 +113,6 @@ void drawAxes() {
 //  Update bodies and view
 void display(void)
 {
-  clock_t begin = clock();
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
@@ -127,9 +126,6 @@ void display(void)
   glLoadIdentity();
   glutSwapBuffers();
   glutPostRedisplay();
-  clock_t end = clock();
-  double timeTaken = end - begin;
-  title(timeTaken);
 }
 
 //  Standard reshape function
@@ -163,13 +159,13 @@ void keyboard (unsigned char key, int x, int y) {
       cPhi = 3;
     //  Zoom in/out
   } else  if (key=='w') {
-    cx -= 0.4;
-    cy -= 0.4;
-    cz -= 0.4;
+    cx -= 0.4f;
+    cy -= 0.4f;
+    cz -= 0.4f;
   } else  if (key=='s') {
-    cx += 0.4;
-    cy += 0.4;
-    cz += 0.4;
+    cx += 0.4f;
+    cy += 0.4f;
+    cz += 0.4f;
     //  Close the program
   } else  if (key==27) {
     exit(0);
@@ -178,6 +174,7 @@ void keyboard (unsigned char key, int x, int y) {
     resetBodies();
   } else if (key == 'm') {
     mode = (mode + 1) % 3;
+    title();
   } else if (key == 'p') {
     halt = !halt;
   } else if (key == 'n') {
@@ -190,7 +187,7 @@ void keyboard (unsigned char key, int x, int y) {
 	glutPostRedisplay();  
 }
 
-void title(double inTime) {
+void title() {
   std::ostringstream title;
   if (mode == 0)
     title << "CPU";
@@ -198,20 +195,14 @@ void title(double inTime) {
     title << "OpenMP";
   else if (mode == 2)
     title << "OpenCL";
-
-  inTime = 1000/inTime;
-  title << "\tTime: " << inTime;
+  title << "   Bodies:" << NUMBODIES;
   std::string dup_title = title.str();
   glutSetWindowTitle(dup_title.c_str());
 }
 
-void mouse(int x, int y) {
-
-}
-
 void graphicsMain() {
   int argc = 1;
-  char title[] = "NBody";
+  char title[] = "OpenCL";
   char* argv[] = {title, NULL};
   glutInit (&argc, argv);
   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -222,7 +213,6 @@ void graphicsMain() {
   glutDisplayFunc(display); 
   glutReshapeFunc(reshape);
   glutKeyboardFunc(keyboard);
-	glutPassiveMotionFunc(mouse);
   glutIdleFunc(display);
   glutMainLoop();
 }

@@ -16,7 +16,8 @@ int main(int argc, char* argv[]) {
   srand((unsigned int)time(NULL));
   graphicsMain();
   
-  
+  //  Octree stuff that is not finalized
+  /*
   double center[3] = {5.0, 5.0, 5.0};
   double size = 5.0;
   Body a, b, c, d, e, f; 
@@ -27,5 +28,6 @@ int main(int argc, char* argv[]) {
 		bodyList[i].setRandom(i);
 		insert(root, bodyList[i], center, size);
 	}
+  */
   return 0;
 }

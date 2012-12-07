@@ -1,9 +1,5 @@
 #include "Octree.h"
 
-void find(unsigned int bodyNum) {
-
-}
-
 void insert(OctNode *&root, Body b, double inCenter[], double inSize) {
 
 	//  determine where the particle is located compared to the current center
