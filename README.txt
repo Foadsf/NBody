@@ -21,3 +21,6 @@ Controls:
 	N	: Change the shape of the body distribution from 2D to 3D
 	P	: Pause the current state of the program
 	ESC	: Exit the program
+
+A video of the program running in OpenCL mode can be seen here: http://www.youtube.com/watch?v=WiJtigzdn8I
+I recommend watching it in HD as it can be hard to see the bodies otherwise
