@@ -1,0 +1,4 @@
+1. a lot of OpenGL functions are depreciated. we need to move from fixed function legacy OpenGL to programable shaders
+2. change to pure C for the sake of consistency in the code
+3. the code compiles but the particles do not move. why?
+4. force to be changed from gravity to electromagnetic

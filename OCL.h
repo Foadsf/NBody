@@ -2,12 +2,16 @@
 #define OCL_H
 
 #include "Body.h"
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+// #include <unistd.h>
+#else
 #include <CL/cl.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <vector>
+#endif
 #include <iostream>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
 
 void loadFile();
 void setupOpencl();
